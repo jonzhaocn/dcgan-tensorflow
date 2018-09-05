@@ -88,13 +88,19 @@ def build_graph():
         logits=true_logits, labels=tf.ones_like(true_logits)))
     dis_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
         logits=fake_logits, labels=tf.zeros_like(fake_logits)))
+    dis_loss_true_summary = tf.summary.scalar('discriminator_loss_true', dis_loss_true)
+    dis_loss_fake_summary = tf.summary.scalar('discriminator_loss_fake', dis_loss_fake)
+
     dis_loss = dis_loss_true + dis_loss_fake
 
     gen_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
         logits=fake_logits, labels=tf.ones_like(fake_logits)))
 
-    gen_loss_sum = tf.summary.scalar("gen_loss", gen_loss)
-    dis_loss_sum = tf.summary.scalar("dis_loss", dis_loss)
+    gen_loss_summary = tf.summary.scalar("generator_loss", gen_loss)
+    dis_loss_summary = tf.summary.scalar("discriminator_loss", dis_loss)
+
+    gen_loss_summary_merge = tf.summary.merge([gen_loss_summary])
+    dis_loss_summary_merge = tf.summary.merge([dis_loss_summary, dis_loss_true_summary, dis_loss_fake_summary])
 
     gen_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='generator')
     dis_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='discriminator')
@@ -108,13 +114,12 @@ def build_graph():
         minimize(gen_loss, var_list=gen_params, global_step=gen_counter)
     dis_opt = tf.train.AdamOptimizer(learning_rate=1e-4, beta1=0.5,).\
         minimize(dis_loss, var_list=dis_params, global_step=dis_counter)
-    return gen_opt, dis_opt, fake_images
+    return gen_opt, dis_opt, fake_images, gen_loss_summary_merge, dis_loss_summary_merge
 
 
 def train():
     with tf.device(device):
-        gen_opt, dis_opt, fake_images = build_graph()
-    merged_all = tf.summary.merge_all()
+        gen_opt, dis_opt, fake_images, gen_loss_summary, dis_loss_summary = build_graph()
     saver = tf.train.Saver()
     session_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
     session_config.gpu_options.allow_growth = True
@@ -138,13 +143,20 @@ def train():
         for iter_count in range(iter_start, max_iter):
 
             # train discriminator
-            sess.run(dis_opt)
-            # train generator
-            sess.run(gen_opt)
-
             if iter_count % 100 == 99:
-                merged = sess.run(merged_all)
-                summary_writer.add_summary(merged, iter_count)
+                _, summary = sess.run([dis_opt, dis_loss_summary])
+                summary_writer.add_summary(summary, iter_count)
+            else:
+                sess.run(dis_opt)
+
+            # Run gen_opt twice to make sure that d_loss does not go to zero (different from paper)
+            sess.run(gen_opt)
+            # train generator
+            if iter_count % 100 == 99:
+                _, summary = sess.run([gen_opt, gen_loss_summary])
+                summary_writer.add_summary(summary, iter_count)
+            else:
+                sess.run(gen_opt)
 
             # save sample
             if iter_count % 1000 == 999:
