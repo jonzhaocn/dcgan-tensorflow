@@ -7,7 +7,7 @@
 ## Results
 ### loss
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discrimination_loss.jpg" title="discriminator loss">
+  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discriminator_loss.jpg" title="discriminator loss">
 </p>
 <p align="center">
   <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discriminator_loss_fake.jpg" title="discriminator loss of fake image">
@@ -20,7 +20,7 @@
 </p>
 
 ### generating images
-the model converges rapidly, but it's easy to be model collapse
+the model converges rapidly, but it's easy to be collapse
 * iteration == 1000
 <p align="center">
   <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/999.jpg">
