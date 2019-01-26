@@ -7,48 +7,48 @@
 ## Results
 ### loss
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discriminator_loss.jpg" title="discriminator loss">
+  <img src="/images/discriminator_loss.jpg" title="discriminator loss">
 </p>
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discriminator_loss_fake.jpg" title="discriminator loss of fake image">
+  <img src="/images/discriminator_loss_fake.jpg" title="discriminator loss of fake image">
 </p>
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/discriminator_loss_true.jpg" title="discriminator loss of true image">
+  <img src="/images/discriminator_loss_true.jpg" title="discriminator loss of true image">
 </p>
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/generator_loss.jpg" title="generator loss">
+  <img src="/images/generator_loss.jpg" title="generator loss">
 </p>
 
 ### generating images
-the model converges rapidly, but it's easy to be collapse
+the model converges rapidly, but it's easy to collapse
 * iteration == 1000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/999.jpg">
+  <img src="/images/999.jpg">
 </p>
 
 * iteration == 25000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/24999.jpg">
+  <img src="/images/24999.jpg">
 </p>
 
 * iteration == 50000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/49999.jpg">
+  <img src="/images/49999.jpg">
 </p>
 
 * iteration == 96000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/95999.jpg">
+  <img src="/images/95999.jpg">
 </p>
 
 * iteration == 97000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/96999.jpg">
+  <img src="/images/96999.jpg">
 </p>
 
 * iteration == 98000
 <p align="center">
-  <img src="https://github.com/JZhaoCH/dcgan-tensorflow/blob/master/images/97999.jpg">
+  <img src="/images/97999.jpg">
 </p>
 
 ## Refereces
